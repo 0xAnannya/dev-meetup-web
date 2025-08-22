@@ -3,9 +3,9 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "./utils/userSlice";
+import { addUser } from "../utils/userSlice";
 
 const Body = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <NavBar />
       <main className="flex-1">
         <Outlet />

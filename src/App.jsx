@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router";
-import Body from "./Body";
-import Login from "./Login";
-import Feed from "./Feed";
+import Body from "./components/Body";
+import Login from "./components/Login";
+import Feed from "./components/Feed";
 
 import { Provider } from "react-redux";
 import store from "./utils/Store";
-import Profile from "./Profile";
+import Profile from "./components/Profile";
 
 function App() {
   return (

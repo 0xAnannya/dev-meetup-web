@@ -1,11 +1,11 @@
 import { useState } from "react";
-import image from "../assets/loginBackground.jpg";
+import image from "../../assets/loginBackground.jpg";
 import axios from "axios";
-import LoginPageAnimation from "./Animation/LoginPageAnimation";
-import { BASE_URL } from "./utils/constants";
+import LoginPageAnimation from "../Animation/LoginPageAnimation";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { addUser } from "./utils/userSlice";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("aryan@rocketmail.com");
@@ -16,8 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // console.log("addUser is:", addUser);
-
     try {
       const res = await axios.post(
         BASE_URL + "/login",
