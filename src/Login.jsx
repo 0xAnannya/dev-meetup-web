@@ -10,6 +10,7 @@ import { addUser } from "./utils/userSlice";
 const Login = () => {
   const [emailId, setEmailId] = useState("aryan@rocketmail.com");
   const [password, setPassword] = useState("Aryan@123");
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,15 +29,11 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log("API Response:", res.data); // Add this line to debug
-      console.log("addUser action:", addUser);
-      console.log("typeof addUser:", typeof addUser);
-
-      //   console.log(res);
       dispatch(addUser(res.data));
-      navigate("/");
+      return navigate("/");
     } catch (err) {
-      console.log(err.message);
+      setError(err?.response?.data?.message || "Something Went Wrong");
+      console.error("err:", err);
     }
   };
 
@@ -73,9 +70,11 @@ const Login = () => {
                 className="input w-full"
                 placeholder="Password"
               />
-              <div className="mt-2 mb-4 flex justify-end">
+              <div className="mt-2 flex justify-end">
                 <a className="link link-hover text-sm">Forgot password?</a>
               </div>
+              {error && <p className="text-red-500 ">{error}</p>}
+
               <button className="btn btn-neutral w-full" onClick={handleLogin}>
                 Login
               </button>
