@@ -1,33 +1,90 @@
+import { useState } from "react";
 import image from "../assets/loginBackground.jpg";
-import LoginPageAnimation from "./Animation/LoginPage";
+import axios from "axios";
+import LoginPageAnimation from "./Animation/LoginPageAnimation";
+import { BASE_URL } from "./utils/constants";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { addUser } from "./utils/userSlice";
 
 const Login = () => {
+  const [emailId, setEmailId] = useState("aryan@rocketmail.com");
+  const [password, setPassword] = useState("Aryan@123");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    // console.log("addUser is:", addUser);
+
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("API Response:", res.data); // Add this line to debug
+      console.log("addUser action:", addUser);
+      console.log("typeof addUser:", typeof addUser);
+
+      //   console.log(res);
+      dispatch(addUser(res.data));
+      navigate("/");
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   return (
     <div
-      className="hero bg-base-200 flex-1 overflow-hidden"
+      className="hero bg-base-200 min-h-screen"
       style={{
         backgroundImage: `url(${image})`,
       }}
     >
-      <div className="hero-overlay bg-opacity-60"></div>
+      <div className="hero-overlay bg-opacity-10"></div>
 
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <div className="flex flex-col-reverse items-center sm:flex-row-reverse justify-center sm:items-center">
+        {/* Login card */}
+        <div className="card bg-base-100 w-full h-100  max-w-sm shrink-0 shadow-2xl">
           <div className="card-body">
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
+            <h1 className="mb-5 text-3xl sm:text-5xl font-bold text-center sm:text-left">
+              Hello there
+            </h1>
             <fieldset className="fieldset">
               <label className="label">Email</label>
-              <input type="email" className="input" placeholder="Email" />
+              <input
+                type="email"
+                value={emailId}
+                onChange={(e) => setEmailId(e.target.value)}
+                className="input w-full"
+                placeholder="Email"
+              />
               <label className="label">Password</label>
-              <input type="password" className="input" placeholder="Password" />
-              <div>
-                <a className="link link-hover">Forgot password?</a>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input w-full"
+                placeholder="Password"
+              />
+              <div className="mt-2 mb-4 flex justify-end">
+                <a className="link link-hover text-sm">Forgot password?</a>
               </div>
-              <button className="btn btn-neutral mt-4">Login</button>
+              <button className="btn btn-neutral w-full" onClick={handleLogin}>
+                Login
+              </button>
             </fieldset>
           </div>
         </div>
-        <div className="">
+
+        {/* Animation (hidden on very small screens if needed) */}
+        <div className="w-full flex justify-center sm:static fixed bottom-0 ">
           <LoginPageAnimation />
         </div>
       </div>

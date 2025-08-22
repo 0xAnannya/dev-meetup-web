@@ -3,7 +3,7 @@ import loginPageAnimation from "../../assets/loginPageAnimation.json"; // your J
 
 const LoginPageAnimation = () => {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center ">
       <Lottie
         animationData={loginPageAnimation}
         loop={true}
