@@ -39,7 +39,7 @@ const Body = () => {
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      <Footer className="mt-auto" />
     </div>
   );
 };

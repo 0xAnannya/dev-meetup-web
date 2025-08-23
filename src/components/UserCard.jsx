@@ -1,19 +1,23 @@
-import PawsAnimation from "../Animation/PawsAnimation";
-
 const UserCard = ({ user }) => {
-  const { firstName, lastName, photoUrl, age, skills, about } = user;
+  const { name, breed, photoUrl, age, about } = user;
   return (
-    <div className="card bg-[#FFFFFF] w-85 mt-15 shadow-sm">
+    <div className="card bg-[#FFFFFF] w-95 mt-15 shadow-sm">
       <figure>
-        <img src={photoUrl} className="w-full p-4" alt="Shoes" />
+        <img src={photoUrl} className="w-full p-4" alt="Dogs" />
       </figure>
       <div className="card-body ">
-        <p className="card-title">{firstName + " " + lastName}</p>
-        {age && skills && (
-          <p className="text-[#f2a070] ">
-            {age} {skills}
-          </p>
-        )}
+        <p className="flex w-full b text-2xl font-bold">{name}</p>
+
+        <div className="flex   mt-1 ">
+          {age && (
+            <p className="text-[#ba6230] font-semibold text-lg ">Age: {age}</p>
+          )}
+          {breed && (
+            <p className="text-[#ba6230] font-semibold text-lg ">
+              Breed: {breed}
+            </p>
+          )}
+        </div>
         {about && <p>{about}</p>}
 
         <div className="card-actions justify-center mt-2 flex">
