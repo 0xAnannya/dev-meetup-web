@@ -9,7 +9,6 @@ import PawsAnimation from "../Animation/PawsAnimation";
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
   const dispatch = useDispatch();
-  console.log(feed);
 
   const getFeed = async () => {
     if (feed) return;
@@ -17,7 +16,6 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      console.log(res);
       dispatch(addFeed(res?.data?.data));
     } catch (err) {
       console.error(err);

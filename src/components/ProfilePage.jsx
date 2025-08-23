@@ -4,6 +4,7 @@ import { useState } from "react";
 import EditProfilePage from "./EditProfilePage";
 import image from "../../assets/c5.jpg";
 import { CommonApis } from "../utils/CommonApis";
+import { Link } from "react-router";
 
 const ProfilePage = () => {
   const [editProfile, setEditProfile] = useState(false);
@@ -13,7 +14,6 @@ const ProfilePage = () => {
   const handleEditProfile = () => {
     setEditProfile((prev) => !prev);
   };
-  console.log(handleLogOut);
   return (
     <>
       {user && (
@@ -28,20 +28,20 @@ const ProfilePage = () => {
         >
           {/* Sidebar */}
           <aside className="w-60 bg-[#fdf6e3] p-6 flex flex-col gap-6 rounded-r-2xl shadow-md">
-            <button
-              // onClick={() => console.log("Matches clicked")}
+            <Link
+              to="/connections"
               className="flex items-center gap-3 text-gray-700 hover:text-black"
             >
               <span>💛</span>
-              Matches
-            </button>
-            <button
-              // onClick={() => console.log("Requests clicked")}
+              Connections
+            </Link>
+            <Link
+              to="/requests"
               className="flex items-center gap-3 text-gray-700 hover:text-black"
             >
               <span>📥</span>
               Requests
-            </button>
+            </Link>
             <button
               onClick={handleEditProfile}
               className="flex items-center gap-3 text-gray-700 hover:text-black"
