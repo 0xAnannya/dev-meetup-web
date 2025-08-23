@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "../utils/constants";
-import { addRequests } from "../utils/requestsSlice";
+import { addRequests, removeRequest } from "../utils/requestsSlice";
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -20,15 +20,33 @@ const Requests = () => {
     }
   };
 
+  const reviewRequests = async (status, _id) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeRequest(_id));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     fetchRequests();
   }, []);
 
   if (!requests) return;
 
-  if (requests.length === 0) return <>No Request Found</>;
+  if (requests.length === 0)
+    return (
+      <div className="flex justify-center my-10 text-2xl font-semibold">
+        No Request Found
+      </div>
+    );
   return (
-    <div className="  my-5">
+    <div className=" flex bg-base-200 flex-start flex-col min-h-screen  ">
       <h1 className="p-4  text-2xl opacity-80 ">Incoming Requests</h1>
 
       {requests.map((request) => {
@@ -37,7 +55,7 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className=" bg-base-100  justify-between flex-col md:flex-row flex my-5 mx-12 p-3 items-center w-full md:w-1/2 rounded-lg gap-4 shadow-xl"
+            className=" bg-base-100  justify-between border-1 flex-col md:flex-row flex my-5 mx-12 p-3 max-h-fit items-center w-full lg:w-1/2 rounded-lg gap-4 shadow-xl"
           >
             <div className="flex justify-around items-around">
               <div className="flex-shrink-0">
@@ -61,8 +79,18 @@ const Requests = () => {
               </div>
             </div>
             <div className="card-actions  mt-2 flex">
-              <button className="btn btn-success">Interested</button>
-              <button className="btn btn-neutral">Ignore</button>
+              <button
+                className="btn btn-success"
+                onClick={() => reviewRequests("accepted", request._id)}
+              >
+                Accepted
+              </button>
+              <button
+                className="btn btn-neutral"
+                onClick={() => reviewRequests("rejected", request._id)}
+              >
+                Rejected
+              </button>
             </div>
           </div>
         );
