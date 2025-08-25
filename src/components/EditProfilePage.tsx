@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
+import DogNManAnimation from "../Animation/DogNManAnimation";
 
 const EditProfilePage = ({ formTitle, user }) => {
   const [name, setName] = useState(user?.name || "");
@@ -15,6 +17,7 @@ const EditProfilePage = ({ formTitle, user }) => {
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSaveProfile = async () => {
     try {
@@ -31,10 +34,12 @@ const EditProfilePage = ({ formTitle, user }) => {
         { withCredentials: true }
       );
       dispatch(addUser(res?.data.data));
+
       if (res.status === 200) {
         setError(false);
         setStatus(res?.data?.message);
       }
+      window.location.reload();
     } catch (err) {
       console.error(err);
       setError(true);
@@ -43,77 +48,102 @@ const EditProfilePage = ({ formTitle, user }) => {
   };
 
   return (
-    <div className="flex w-full justify-center mt-10 min-h-screen">
-      <div className="">
-        <fieldset className="fieldset bg-[#fdf6e3] border-base-900 rounded-box w-sm border p-4">
-          <legend className="fieldset-legend text-2xl">{formTitle}</legend>
-          <label className="label mt-3">Name</label>
-          <input
-            type="text"
-            className="input"
-            placeholder=""
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
+    <div className="w-full flex  justify-center">
+      <div className=" bg-[#fdf6e3] border-base-900 rounded-box  w-fit h-fit border p-7 my-20">
+        <legend className="text-2xl font-bold mb-4">{formTitle}</legend>
 
-          <label className="label mt-3">Breed</label>
-          <input
-            type="text"
-            className="input"
-            value={breed}
-            onChange={(e) => setBreed(e.target.value)}
-            placeholder="my-awesome-page"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+          {/* Name */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Name</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Enter name"
+              value={name}
+              width={500}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-          <label className="label mt-3">Age</label>
-          <input
-            type="text"
-            className="input"
-            value={age}
-            placeholder="Name"
-            onChange={(e) => setAge(e.target.value)}
-          />
+          {/* Breed */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Breed</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Enter breed"
+              value={breed}
+              onChange={(e) => setBreed(e.target.value)}
+            />
+          </div>
 
-          <label className="label mt-3">About</label>
-          <input
-            type="text"
-            className="input"
-            value={about}
-            placeholder="My awesome page"
-            onChange={(e) => setAbout(e.target.value)}
-          />
+          {/* Age */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Age</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Enter age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </div>
 
-          <label className="label mt-3">Location</label>
-          <input
-            type="text"
-            className="input"
-            value={location}
-            placeholder="My awesome page"
-            onChange={(e) => setLocation(e.target.value)}
-          />
+          {/* About */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">About</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Something about them"
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
+            />
+          </div>
 
-          <label className="label mt-3">Photo URL</label>
-          <input
-            type="text"
-            className="input"
-            value={photoUrl}
-            placeholder="My awesome page"
-            onChange={(e) => setPhotoUrl(e.target.value)}
-          />
+          {/* Location */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Location</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Enter location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
 
-          {error ? (
-            <div className="text-red-500 mt-2">{status}</div>
-          ) : (
-            <div className="text-green-600 text-base mt-2">{status}</div>
-          )}
+          {/* Photo URL */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium mb-1">Photo URL</label>
+            <input
+              type="text"
+              className="input input-bordered"
+              placeholder="Enter photo URL"
+              value={photoUrl}
+              onChange={(e) => setPhotoUrl(e.target.value)}
+            />
+          </div>
+        </div>
 
-          <button
-            className="btn btn-neutral w-full mt-5"
-            onClick={handleSaveProfile}
-          >
-            Save Profile
-          </button>
-        </fieldset>
+        {/* Status */}
+        {error ? (
+          <div className="text-red-500 mt-2">{status}</div>
+        ) : (
+          <div className="text-green-600 text-base mt-2">{status}</div>
+        )}
+
+        {/* Save button */}
+        <button
+          className="btn btn-neutral w-full mt-15"
+          onClick={handleSaveProfile}
+        >
+          Save Profile
+        </button>
+      </div>
+      <div>
+        <DogNManAnimation />
       </div>
     </div>
   );

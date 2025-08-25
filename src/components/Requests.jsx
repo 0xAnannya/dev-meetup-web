@@ -46,7 +46,7 @@ const Requests = () => {
       </div>
     );
   return (
-    <div className=" flex bg-base-200 flex-start flex-col min-h-screen  ">
+    <div className=" flex bg-base-200 flex-start items-center flex-col min-h-screen  w-full ">
       <h1 className="p-4  text-2xl opacity-80 ">Incoming Requests</h1>
 
       {requests.map((request) => {
@@ -55,7 +55,9 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className=" bg-base-100  justify-between border-1 flex-col md:flex-row flex my-5 mx-12 p-3 max-h-fit items-center w-full lg:w-1/2 rounded-lg gap-4 shadow-xl"
+            className=" bg-base-100  border-1  md:flex-row 
+            flex my-3  p-3 max-h-fit items-center w-2xl  
+            rounded-lg  shadow-xl flex-col justify-between"
           >
             <div className="flex justify-around items-around">
               <div className="flex-shrink-0">
@@ -65,9 +67,9 @@ const Requests = () => {
                   src={photoUrl}
                 />
               </div>
-              <div className="text-left mx-4 flex flex-col">
+              <div className="text-left mx-4 flex  flex-col">
                 <h2 className="font-semibold text-xl">{name}</h2>
-                <div className="flex flex-col sm:flex-row justify-normal gap-1 sm:gap-4 my-3">
+                <div className="grid grid-cols-2 sm:flex-row justify-normal gap-1 sm:gap-4 my-3">
                   {" "}
                   {age && <p>Age : {age}</p>} {}
                   {breed && <p>Breed: {breed}</p>}
@@ -78,18 +80,18 @@ const Requests = () => {
                 {/* {about && <p>{about}</p>} */}
               </div>
             </div>
-            <div className="card-actions  mt-2 flex">
+            <div className="card-actions  mt-2 flex  flex-row md:flex-col">
               <button
                 className="btn btn-success"
                 onClick={() => reviewRequests("accepted", request._id)}
               >
-                Accepted
+                Accept
               </button>
               <button
                 className="btn btn-neutral"
                 onClick={() => reviewRequests("rejected", request._id)}
               >
-                Rejected
+                Reject
               </button>
             </div>
           </div>
